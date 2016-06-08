@@ -54,7 +54,9 @@ public class CountriesService extends IntentService {
                 null  // sort order
         );
 
-        if ((cursor != null) && (cursor.getCount() > 0)) return;
+        //wipe everything - debug feature?
+        if ((cursor != null) && (cursor.getCount() > 0))
+            getContentResolver().delete(CountryContract.CountryEntry.CONTENT_URI, null, null);
         cursor.close();
 
         HttpURLConnection urlConnection = null;
