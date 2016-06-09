@@ -2,6 +2,7 @@ package com.example.countries;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -51,6 +52,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mFlag = (ImageView) findViewById(R.id.flag);
 
         mDescription = (TextView) findViewById(R.id.description);
+                mDescription.setTypeface(Typeface.createFromAsset(getAssets(), "Slabo27px-Regular.ttf"));
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +72,21 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportLoaderManager().initLoader(COUNTRY_LOADER, null, this);
+    }
+
     private void setViews() {
-        if (mCursor == null) return;
+        if (mCursor == null || mCursor.isClosed()) return;
         mCursor.moveToPosition(mCountryId);
-        Picasso.with(this).load(mCursor.getString(COL_FLAG_LINK)).into(mFlag);
-        mToolbar.setTitle(mCursor.getString(COL_NAME));
         mDescriptionString = mCursor.getString(COL_DESCRIPTION);
         mDescription.setText(mDescriptionString);
-        mCursor.close();
+        Picasso.with(this).load(mCursor.getString(COL_FLAG_LINK)).into(mFlag);
+        mToolbar.setTitle(mCursor.getString(COL_NAME));
+
+        //mCursor.close();
 
 
     }

@@ -59,6 +59,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryA
 
     @Override
     public void onBindViewHolder(CountryAdapterViewHolder holder, int position) {
+        if (mCursor == null || mCursor.isClosed()) return;
         mCursor.moveToPosition(position);
         holder.mName.setText(mCursor.getString(COL_NAME));
         Picasso.with(mActivity).load(mCursor.getString(COL_FLAG_LINK)).into(holder.mFlag);
