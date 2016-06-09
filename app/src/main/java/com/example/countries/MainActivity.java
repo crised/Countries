@@ -9,9 +9,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.example.countries.data.CountryContract;
@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private AdView mAdView;
 
+    private Toolbar mToolbar;
     private RecyclerView mRecyclerView;
     private CountryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
 
     static final int COL_ID = 0;
     static final int COL_KEY = 1;
@@ -52,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
 
         //Admob
         MobileAds.initialize(getApplicationContext(), getString(R.string.banner_ad_unit_id));
