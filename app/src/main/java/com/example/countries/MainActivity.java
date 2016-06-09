@@ -3,12 +3,12 @@ package com.example.countries;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -20,7 +20,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -30,9 +29,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     private AdView mAdView;
-    private Cursor mCursorData;
-    private TextView mText1;
-    private List<Country> mCountryList;
 
     private RecyclerView mRecyclerView;
     private CountryAdapter mAdapter;
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     static final int COL_LANGUAGE = 7;
     static final int COL_DESCRIPTION = 8;
 
-    static final String PARC_KEY = "COUNTRY_DETAILS";
+    static final String COUNTRY_ID = "COUNTRY_ID";
 
     public MainActivity() {
     }
@@ -69,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Intent countryIntent = new Intent(this, CountriesService.class);
         startService(countryIntent);
 
-        mText1 = (TextView) findViewById(R.id.text1);
+        TextView mText1 = (TextView) findViewById(R.id.text1);
 
         getSupportLoaderManager().initLoader(COUNTRY_LOADER, null, this);
 
@@ -100,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data.getCount() == 0) return;
         mAdapter.swapCursor(data);
-        mCursorData = data;
-        setCountries();
+        // mCursorData = data;
+        //setCountries();
         //mText1.setText(mCountryList.get(1).getName());
 
 
@@ -113,11 +109,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    public void onItemSelected(String[] data, CountryAdapter.CountryAdapterViewHolder viewHolder) {
+    public void onItemSelected(int countryId, CountryAdapter.CountryAdapterViewHolder viewHolder) {
 
         Intent i = new Intent(this, DetailActivity.class);
 
-        i.putExtra(PARC_KEY, data);
+        i.putExtra(COUNTRY_ID, countryId);
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                 viewHolder.mFlag, "profile"); //profile->xml
@@ -128,23 +124,4 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-
-    //maybe oldCode
-    private void setCountries() {
-        mCountryList = new ArrayList<>();
-        for (mCursorData.moveToFirst(); !mCursorData.isAfterLast(); mCursorData.moveToNext()) {
-            Country country = new Country();
-            country.setKey(mCursorData.getInt(COL_KEY));
-            country.setName(mCursorData.getString(COL_NAME));
-            country.setFlag(mCursorData.getString(COL_FLAG_LINK));
-            country.setGDP(mCursorData.getString(COL_GDP));
-            country.setPopulation(mCursorData.getString(COL_POPULATION));
-            country.setArea(mCursorData.getString(COL_AREA));
-            country.setLanguage(mCursorData.getString(COL_LANGUAGE));
-            country.setDescription(mCursorData.getString(COL_DESCRIPTION));
-            mCountryList.add(country);
-        }
-
-
-    }
 }

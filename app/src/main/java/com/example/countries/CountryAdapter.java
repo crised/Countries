@@ -10,15 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import static com.example.countries.MainActivity.COL_AREA;
-import static com.example.countries.MainActivity.COL_DESCRIPTION;
 import static com.example.countries.MainActivity.COL_FLAG_LINK;
-import static com.example.countries.MainActivity.COL_GDP;
-import static com.example.countries.MainActivity.COL_ID;
-import static com.example.countries.MainActivity.COL_KEY;
-import static com.example.countries.MainActivity.COL_LANGUAGE;
 import static com.example.countries.MainActivity.COL_NAME;
-import static com.example.countries.MainActivity.COL_POPULATION;
 
 /**
  * Created by crised on 08-06-16.
@@ -50,17 +43,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryA
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            mCursor.moveToPosition(adapterPosition);
-            String[] data = {mCursor.getString(COL_ID),
-                    mCursor.getString(COL_KEY),
-                    mCursor.getString(COL_NAME),
-                    mCursor.getString(COL_FLAG_LINK),
-                    mCursor.getString(COL_GDP),
-                    mCursor.getString(COL_POPULATION),
-                    mCursor.getString(COL_AREA),
-                    mCursor.getString(COL_LANGUAGE),
-                    mCursor.getString(COL_DESCRIPTION)};
-            mActivity.onItemSelected(data, this);
+            mActivity.onItemSelected(adapterPosition, this);
         }
     }
 
@@ -79,6 +62,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryA
         mCursor.moveToPosition(position);
         holder.mName.setText(mCursor.getString(COL_NAME));
         Picasso.with(mActivity).load(mCursor.getString(COL_FLAG_LINK)).into(holder.mFlag);
+        //mCursor.close();
 
 
     }
