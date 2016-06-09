@@ -2,6 +2,8 @@ package com.example.countries;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     static final int COL_AREA = 6;
     static final int COL_LANGUAGE = 7;
     static final int COL_DESCRIPTION = 8;
+
+    static final String PARC_KEY = "COUNTRY_DETAILS";
 
     public MainActivity() {
     }
@@ -109,6 +113,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    public void onItemSelected(String[] data, CountryAdapter.CountryAdapterViewHolder viewHolder) {
+
+        Intent i = new Intent(this, DetailActivity.class);
+
+        i.putExtra(PARC_KEY, data);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                viewHolder.mFlag, "profile"); //profile->xml
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            startActivity(i, options.toBundle());
+        } else startActivity(i);
+
+    }
+
+
+    //maybe oldCode
     private void setCountries() {
         mCountryList = new ArrayList<>();
         for (mCursorData.moveToFirst(); !mCursorData.isAfterLast(); mCursorData.moveToNext()) {

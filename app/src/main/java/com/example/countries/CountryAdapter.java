@@ -1,9 +1,7 @@
 package com.example.countries;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import static com.example.countries.MainActivity.*;
+import static com.example.countries.MainActivity.COL_AREA;
+import static com.example.countries.MainActivity.COL_DESCRIPTION;
+import static com.example.countries.MainActivity.COL_FLAG_LINK;
+import static com.example.countries.MainActivity.COL_GDP;
+import static com.example.countries.MainActivity.COL_ID;
+import static com.example.countries.MainActivity.COL_KEY;
+import static com.example.countries.MainActivity.COL_LANGUAGE;
+import static com.example.countries.MainActivity.COL_NAME;
+import static com.example.countries.MainActivity.COL_POPULATION;
 
 /**
  * Created by crised on 08-06-16.
@@ -23,10 +29,10 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryA
 
 
     private Cursor mCursor;
-    final private Context mContext;
+    final private MainActivity mActivity;
 
-    public CountryAdapter(Context mContext) {
-        this.mContext = mContext;
+    public CountryAdapter(MainActivity mActivity) {
+        this.mActivity = mActivity;
     }
 
     public class CountryAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -43,7 +49,18 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryA
 
         @Override
         public void onClick(View v) {
-
+            int adapterPosition = getAdapterPosition();
+            mCursor.moveToPosition(adapterPosition);
+            String[] data = {mCursor.getString(COL_ID),
+                    mCursor.getString(COL_KEY),
+                    mCursor.getString(COL_NAME),
+                    mCursor.getString(COL_FLAG_LINK),
+                    mCursor.getString(COL_GDP),
+                    mCursor.getString(COL_POPULATION),
+                    mCursor.getString(COL_AREA),
+                    mCursor.getString(COL_LANGUAGE),
+                    mCursor.getString(COL_DESCRIPTION)};
+            mActivity.onItemSelected(data, this);
         }
     }
 
@@ -61,8 +78,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryA
     public void onBindViewHolder(CountryAdapterViewHolder holder, int position) {
         mCursor.moveToPosition(position);
         holder.mName.setText(mCursor.getString(COL_NAME));
-        Log.d(LOG_TAG, mCursor.getString(COL_FLAG_LINK));
-        Picasso.with(mContext).load(mCursor.getString(COL_FLAG_LINK)).into(holder.mFlag);
+        Picasso.with(mActivity).load(mCursor.getString(COL_FLAG_LINK)).into(holder.mFlag);
 
 
     }
