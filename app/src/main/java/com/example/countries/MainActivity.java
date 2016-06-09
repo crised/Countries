@@ -9,6 +9,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     static final String COUNTRY_ID = "COUNTRY_ID";
 
+    private boolean isTablet;
+
+
     public MainActivity() {
     }
 
@@ -56,6 +60,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar == null) {
+            mToolbar = (Toolbar) findViewById(R.id.toolbar_tablet);
+            isTablet = true;
+
+        }
         setSupportActionBar(mToolbar);
 
 
@@ -76,13 +85,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //RecyclerView
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CountryAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
 
+        // use a linear layout manager
+        if (isTablet) {
+            mLayoutManager = new GridLayoutManager(this, 2);
+
+        } else {
+            mLayoutManager = new LinearLayoutManager(this);
+
+        }
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
     }
 
