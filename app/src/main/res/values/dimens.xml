@@ -2,6 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_margin_top">50dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
 
@@ -14,4 +15,13 @@
     <dimen name="widget_today_min_resize_width">40dp</dimen>
     <dimen name="widget_today_min_resize_height">@dimen/widget_today_default_height</dimen>
     <dimen name="widget_today_large_width">220dp</dimen>
+
+    <dimen name="list_item_padding">3dp</dimen>
+    <dimen name="list_item_margin">2dp</dimen>
+    <dimen name="card_corner_radius">4dp</dimen>
+
+    <dimen name="normal_elevation">2dp</dimen>
+    <dimen name="content_detail_flag_padding">1dp</dimen>
+    <dimen name="content_detail_card_view_margin">2dp</dimen>
+    <dimen name="content_detail_card_view_padding">4dp</dimen>
 </resources>

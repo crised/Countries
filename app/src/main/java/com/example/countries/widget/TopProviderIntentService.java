@@ -7,14 +7,11 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.countries.MainActivity;
 import com.example.countries.R;
 import com.example.countries.data.CountryContract;
-
-import static com.example.countries.data.CountryContract.CountryEntry.COLUMN_NAME;
 
 /**
  * Created by crised on 09-06-16.
@@ -41,15 +38,15 @@ public class TopProviderIntentService extends IntentService {
         for (int appWidgetId : appWidgetIds) {
 
             RemoteViews views = new RemoteViews(getPackageName(), R.layout.app_widget);
-            views.setTextViewText(R.id.widget_title, "Top Economies");
-            views.setTextViewText(R.id.widget_first, "1. " + first);
-            views.setTextViewText(R.id.widget_second, "2. " + second);
-            views.setTextViewText(R.id.widget_third, "3. " + third);
+            views.setTextViewText(R.id.widget_title, getString(R.string.widget_title));
+            views.setTextViewText(R.id.widget_first, getString(R.string.widget_first_prefix) + first);
+            views.setTextViewText(R.id.widget_second, getString(R.string.widget_second_prefix) + second);
+            views.setTextViewText(R.id.widget_third, getString(R.string.widget_third_prefix) + third);
 
             // Content Descriptions for RemoteViews were only added in ICS MR1
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                views.setContentDescription(R.id.widget_main, "This is the widget");
-            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+                views.setContentDescription(R.id.widget_main,
+                        getString(R.string.widget_content_description_old));
 
 
             // Create an Intent to launch MainActivity

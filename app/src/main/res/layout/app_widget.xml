@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:padding="@dimen/widget_padding">
 
-
         <TextView
             android:id="@+id/widget_title"
             android:layout_width="match_parent"
@@ -49,7 +48,5 @@
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="@color/secondary_text"
             tools:text="28" />
-
-
     </LinearLayout>
 </FrameLayout>

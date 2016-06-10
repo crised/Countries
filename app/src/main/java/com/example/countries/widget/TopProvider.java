@@ -15,21 +15,17 @@ public class TopProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d("TAG", "onUpdate");
         context.startService(new Intent(context, TopProviderIntentService.class));
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        Log.d("TAG", "onAppWidgetOptionsChanged");
-
         context.startService(new Intent(context, TopProviderIntentService.class));
     }
 
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
-        Log.d("TAG", "onReceive");
         context.startService(new Intent(context, TopProviderIntentService.class));
 
     }

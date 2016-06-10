@@ -13,26 +13,28 @@
         android:layout_gravity="top"
         android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:padding="2dp"
-        android:transitionName="profile" />
+        android:padding="@dimen/list_item_padding"
+        android:transitionName="profile"
+        android:contentDescription="@string/list_item_flag"/>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="2dp"
-        android:padding="4dp"
+        android:layout_margin="@dimen/list_item_margin"
+        android:padding="@dimen/list_item_padding"
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="@dimen/card_corner_radius">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            android:typeface="serif" />
+            android:textSize="20sp"
+            android:typeface="serif"
+            android:contentDescription="@string/country_description"/>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
