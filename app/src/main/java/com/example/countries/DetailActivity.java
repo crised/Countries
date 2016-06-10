@@ -3,6 +3,7 @@ package com.example.countries;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -34,6 +35,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     private TextView mDescription;
 
     private String mDescriptionString;
+    private String mCountryName;
 
 
     @Override
@@ -52,7 +54,14 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mFlag = (ImageView) findViewById(R.id.flag);
 
         mDescription = (TextView) findViewById(R.id.description);
-                mDescription.setTypeface(Typeface.createFromAsset(getAssets(), "Slabo27px-Regular.ttf"));
+        mDescription.setTypeface(Typeface.createFromAsset(getAssets(), "Slabo27px-Regular.ttf"));
+
+        mFlag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapClick();
+            }
+        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -84,7 +93,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mDescriptionString = mCursor.getString(COL_DESCRIPTION);
         mDescription.setText(mDescriptionString);
         Picasso.with(this).load(mCursor.getString(COL_FLAG_LINK)).into(mFlag);
-        mToolbar.setTitle(mCursor.getString(COL_NAME));
+        mCountryName = mCursor.getString(COL_NAME);
+        mToolbar.setTitle(mCountryName);
 
         //mCursor.close();
 
@@ -113,6 +123,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCursor = null;
+
+    }
+
+    private void mapClick() {
+
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + mCountryName);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
 
     }
 
