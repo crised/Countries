@@ -138,11 +138,8 @@ public class DetailActivity extends AppCompatActivity implements
 
     @Override
     public void onMapReady(GoogleMap map) {
-
         mGooglemap = map;
         setMapCamera();
-
-
     }
 
     private void setMapCamera() {

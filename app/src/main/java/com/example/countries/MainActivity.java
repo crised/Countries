@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Intent countryIntent = new Intent(this, CountriesService.class);
         startService(countryIntent);
 
-        TextView mText1 = (TextView) findViewById(R.id.text1);
+        //TextView mText1 = (TextView) findViewById(R.id.text1);
 
         getSupportLoaderManager().initLoader(COUNTRY_LOADER, null, this);
 
