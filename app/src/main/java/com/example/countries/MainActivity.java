@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     static final int COL_FLAG_LINK = 3;
     static final int COL_GDP = 4;
     static final int COL_POPULATION = 5;
-    static final int COL_AREA = 6;
+    static final int COL_LOCATION = 6;
     static final int COL_LANGUAGE = 7;
     static final int COL_DESCRIPTION = 8;
 

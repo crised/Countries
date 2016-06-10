@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Top Countries</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="country_service_url" translatable="false">https://api.myjson.com/bins/24is4</string>
+    <string name="country_service_url" translatable="false">https://api.myjson.com/bins/s648</string>
     <string name="title_activity_detail" translatable="false">DetailActivity</string>
     <string name="widget_name">Top 3 Economies</string>
     <string name="widget_title">Top Economies</string>

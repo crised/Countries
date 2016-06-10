@@ -24,4 +24,6 @@
     <dimen name="content_detail_flag_padding">1dp</dimen>
     <dimen name="content_detail_card_view_margin">2dp</dimen>
     <dimen name="content_detail_card_view_padding">4dp</dimen>
+
+    <dimen name="map_dimen">300dp</dimen>
 </resources>

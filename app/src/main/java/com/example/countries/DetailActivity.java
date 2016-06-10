@@ -3,7 +3,6 @@ package com.example.countries;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -11,19 +10,28 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.countries.data.CountryContract;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import static com.example.countries.MainActivity.COL_DESCRIPTION;
 import static com.example.countries.MainActivity.COL_FLAG_LINK;
+import static com.example.countries.MainActivity.COL_LOCATION;
 import static com.example.countries.MainActivity.COL_NAME;
 import static com.example.countries.MainActivity.COUNTRY_ID;
 
-public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DetailActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor>, OnMapReadyCallback {
 
     private static final int COUNTRY_LOADER = 0;
 
@@ -36,7 +44,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     private String mDescriptionString;
     private String mCountryName;
+    private String mLocation;
 
+    private GoogleMap mGooglemap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +66,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mDescription = (TextView) findViewById(R.id.description);
         mDescription.setTypeface(Typeface.createFromAsset(getAssets(), "Slabo27px-Regular.ttf"));
 
-        mFlag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapClick();
-            }
-        });
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +79,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 startActivity(sendIntent);
             }
         });
+
+
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
 
     }
@@ -95,6 +102,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         Picasso.with(this).load(mCursor.getString(COL_FLAG_LINK)).into(mFlag);
         mCountryName = mCursor.getString(COL_NAME);
         mToolbar.setTitle(mCountryName);
+        mLocation = mCursor.getString(COL_LOCATION);
+        Log.d("LOCATAG", mLocation);
 
         //mCursor.close();
 
@@ -116,6 +125,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         if (data.getCount() == 0) return;
         mCursor = data;
         setViews();
+        setMapCamera();
 
 
     }
@@ -126,15 +136,23 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-    private void mapClick() {
+    @Override
+    public void onMapReady(GoogleMap map) {
 
-        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + mCountryName);
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }
+        mGooglemap = map;
+        setMapCamera();
+
 
     }
+
+    private void setMapCamera() {
+        if (mGooglemap == null || mLocation == null) return;
+        String[] latLong = mLocation.split(",");
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(Double.valueOf(latLong[0]), Double.valueOf(latLong[1])));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(2);
+        mGooglemap.moveCamera(center);
+        mGooglemap.animateCamera(zoom);
+    }
+
 
 }

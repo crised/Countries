@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.example.countries.data.CountryContract.CountryEntry.COLUMN_AREA;
+import static com.example.countries.data.CountryContract.CountryEntry.COLUMN_LOC;
 import static com.example.countries.data.CountryContract.CountryEntry.COLUMN_DESCRIPTION;
 import static com.example.countries.data.CountryContract.CountryEntry.COLUMN_FLAG_LINK;
 import static com.example.countries.data.CountryContract.CountryEntry.COLUMN_GDP;
@@ -39,7 +39,7 @@ public class CountryDbHelper extends SQLiteOpenHelper {
                 COLUMN_FLAG_LINK + " TEXT, " +
                 COLUMN_GDP + " TEXT, " +
                 COLUMN_POPULATION + " TEXT, " +
-                COLUMN_AREA + " TEXT, " +
+                COLUMN_LOC + " TEXT, " +
                 COLUMN_LANGUAGE + " TEXT, " +
                 COLUMN_DESCRIPTION + " TEXT"
                 + ")";

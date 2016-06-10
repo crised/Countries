@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.countries.R;
 import com.example.countries.data.CountryContract;
-import com.example.countries.data.CountryProvider;
 import com.example.countries.util.Util;
 
 import org.json.JSONArray;
@@ -104,24 +103,24 @@ public class CountriesService extends IntentService {
             JSONArray jsonArray = new JSONArray(mCountriesWeb);
             for (int i = 0; i < jsonArray.length(); i++) {
                 int key;
-                String name, flag, gdp, population, area, language, description;
+                String name, flag, gdp, population, location, language, description;
                 JSONObject country = jsonArray.getJSONObject(i);
                 key = country.getInt("id");
                 name = country.getString("name");
                 flag = country.getString("flag");
                 gdp = country.getString("gdp");
                 population = country.getString("population");
-                area = country.getString("area");
+                location = country.getString("location");
                 language = country.getString("language");
                 description = country.getString("description");
                 if (name.length() < MIN_LENGTH ||
                         flag.length() < MIN_LENGTH ||
                         gdp.length() < MIN_LENGTH ||
                         population.length() < MIN_LENGTH ||
-                        area.length() < MIN_LENGTH ||
+                        location.length() < MIN_LENGTH ||
                         language.length() < MIN_LENGTH ||
                         description.length() < MIN_LENGTH) throw new IOException();
-                insertCountry(key, name, flag, gdp, population, area, language, description);
+                insertCountry(key, name, flag, gdp, population, location, language, description);
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "failed validating input", e);
@@ -133,7 +132,7 @@ public class CountriesService extends IntentService {
 
     private void insertCountry(int key, String name, String flag,
                                String gdp, String population,
-                               String area, String language,
+                               String location, String language,
                                String description) {
         ContentValues values = new ContentValues();
         values.put(CountryContract.CountryEntry.COLUMN_KEY, key);
@@ -141,7 +140,7 @@ public class CountriesService extends IntentService {
         values.put(CountryContract.CountryEntry.COLUMN_FLAG_LINK, flag);
         values.put(CountryContract.CountryEntry.COLUMN_GDP, gdp);
         values.put(CountryContract.CountryEntry.COLUMN_POPULATION, population);
-        values.put(CountryContract.CountryEntry.COLUMN_AREA, area);
+        values.put(CountryContract.CountryEntry.COLUMN_LOC, location);
         values.put(CountryContract.CountryEntry.COLUMN_LANGUAGE, language);
         values.put(CountryContract.CountryEntry.COLUMN_DESCRIPTION, description);
         getContentResolver().insert(CountryContract.CountryEntry.CONTENT_URI, values);
