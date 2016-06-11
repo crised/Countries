@@ -4,7 +4,7 @@ android {
     signingConfigs {
         config {
             keyPassword 'android'
-            storeFile file('/home/crised/IdeaProjects/AAD/Countries/keys.jks')
+            storeFile file('../keys.jks')
             storePassword 'android'
             keyAlias 'keys'
         }

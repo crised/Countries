@@ -14,4 +14,5 @@
     //Content Description
     <string name="list_item_flag">This is a country flag</string>
     <string name="country_description">This is the description of the country economy</string>
+    <string name="fab_description">Tap here to share!</string>
 </resources>
